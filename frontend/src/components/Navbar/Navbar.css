@@ -106,7 +106,30 @@
        
     }
 }
+.navbar-search-icon {
+    position: relative;
+}
 
+.dot {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+
+    min-width: 18px;
+    height: 18px;
+
+    background: tomato;
+    color: white;
+
+    font-size: 12px;
+    font-weight: bold;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+}
 
 
 

@@ -1,16 +1,26 @@
-import React, { useState } from 'react'
-import './Navbar.css'
-import { assets } from '../../assets/assets'
-import { Link } from 'react-router-dom'
+import React, { useState, useContext } from 'react';
+import './Navbar.css';
+import { assets } from '../../assets/assets';
+import { Link } from 'react-router-dom';
+import { StoreContext } from '../../context/StoreContext';
 
-const Navbar = () => {
+const Navbar = ({ setShowLogin }) => {
 
-  const [menu, setMenu] = useState("menu");
+  const [menu, setMenu] = useState("home");
+
+  const { cartItems } = useContext(StoreContext);
+
+  // 🧠 calculate total items in cart
+  const totalCartItems = Object.values(cartItems).reduce((sum, qty) => {
+    return sum + qty;
+  }, 0);
 
   return (
     <div className='navbar'>
 
-      <img src={assets.logo} alt="logo" className="logo" />
+      <Link to='/'>
+        <img src={assets.logo} alt="logo" className="logo" />
+      </Link>
 
       <ul className="navbar-menu">
 
@@ -61,16 +71,26 @@ const Navbar = () => {
         <img src={assets.search_icon} alt="search" />
 
         <div className="navbar-search-icon">
-          <img src={assets.basket_icon} alt="basket" />
-          <div className="dot"></div>
+          <Link to='/cart'>
+            <img src={assets.basket_icon} alt="basket" />
+          </Link>
+
+          {/* ✅ ONLY SHOW DOT IF CART > 0 */}
+          {totalCartItems > 0 && (
+            <div className="dot">
+              {totalCartItems}
+            </div>
+          )}
         </div>
 
-        <button>Sign In</button>
+        <button onClick={() => setShowLogin(true)}>
+          Sign In
+        </button>
 
       </div>
 
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
